@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="container">
-        <!-- Cabeçalho Principal -->
+        <!-- Cabeçalho -->
         <header class="header">
             <h1><i class="fa-solid fa-calendar-check"></i> Sistema de Reservas</h1>
             <p class="subtitle">Gestão Inteligente de Salas de Estudo e Laboratórios</p>
         </header>
 
-        <!-- Painel de Estatísticas / Resumo -->
+        <!-- Estatísticas -->
         <div class="stats-grid">
             <div class="stat-card">
                 <i class="fa-solid fa-door-open stat-icon"></i>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <!-- Card de Formulário -->
+        <!-- Formulário de Reserva -->
         <div class="card">
             <h2><i class="fa-solid fa-pen-to-square"></i> Efetuar Nova Reserva</h2>
             <form id="form-reserva">
@@ -73,7 +73,7 @@
             </form>
         </div>
 
-        <!-- Card de Salas Disponíveis -->
+        <!-- Salas Disponíveis -->
         <div class="card">
             <h2><i class="fa-solid fa-list-check"></i> Salas Disponíveis</h2>
             <div id="lista-salas" class="item-list">
@@ -81,7 +81,15 @@
             </div>
         </div>
 
-        <!-- Footer Profissional -->
+        <!-- Reservas Efetuadas (Tempo Real) -->
+        <div class="card">
+            <h2><i class="fa-solid fa-clock-rotate-left"></i> Reservas Efetuadas (Tempo Real)</h2>
+            <div id="lista-reservas" class="item-list">
+                <p class="loading-text">A carregar reservas...</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
         <footer class="footer">
             <p>&copy; 2026 Projeto Integrado DWS / POO / BD — Todos os direitos reservados.</p>
             <p class="footer-subtext">Desenvolvido por Gabriel Elias | Entrega Final</p>
