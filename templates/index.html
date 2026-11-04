@@ -3,41 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Reservas - Laboratórios</title>
+    <title>Sistema de Reservas - Laboratórios e Salas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Sistema de Reservas de Salas e Laboratórios</h1>
-        
-        <section class="card">
-            <h2>Efetuar Reserva</h2>
-            <form id="form-reserva">
-                <label for="utilizador">ID Utilizador:</label>
-                <input type="number" id="utilizador" name="utilizador" required placeholder="Ex: 1">
+        <!-- Cabeçalho Principal -->
+        <header class="header">
+            <h1><i class="fa-solid fa-calendar-check"></i> Sistema de Reservas</h1>
+            <p class="subtitle">Gestão Inteligente de Salas de Estudo e Laboratórios</p>
+        </header>
 
-                <label for="sala">ID Sala:</label>
-                <input type="number" id="sala" name="sala" required placeholder="Ex: 101">
-
-                <label for="data">Data:</label>
-                <input type="date" id="data" name="data" required>
-
-                <label for="hora_inicio">Hora Início:</label>
-                <input type="time" id="hora_inicio" name="hora_inicio" required>
-
-                <label for="hora_fim">Hora Fim:</label>
-                <input type="time" id="hora_fim" name="hora_fim" required>
-
-                <button type="submit">Reservar</button>
-            </form>
-        </section>
-
-        <section class="card">
-            <h2>Salas Disponíveis</h2>
-            <div id="lista-salas">
-                <p>A carregar salas...</p>
+        <!-- Painel de Estatísticas / Resumo -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fa-solid fa-door-open stat-icon"></i>
+                <div>
+                    <h3 id="total-salas">0</h3>
+                    <span>Salas Registadas</span>
+                </div>
             </div>
-        </section>
+            <div class="stat-card">
+                <i class="fa-solid fa-users stat-icon"></i>
+                <div>
+                    <h3 id="total-utilizadores">0</h3>
+                    <span>Utilizadores</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card de Formulário -->
+        <div class="card">
+            <h2><i class="fa-solid fa-pen-to-square"></i> Efetuar Nova Reserva</h2>
+            <form id="form-reserva">
+                <div class="form-group">
+                    <label for="utilizador"><i class="fa-solid fa-user"></i> Utilizador:</label>
+                    <select id="utilizador" name="utilizador" required>
+                        <option value="">A carregar utilizadores...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sala"><i class="fa-solid fa-chalkboard-user"></i> Sala / Laboratório:</label>
+                    <select id="sala" name="sala" required>
+                        <option value="">A carregar salas...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="data"><i class="fa-solid fa-calendar"></i> Data:</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hora_inicio"><i class="fa-regular fa-clock"></i> Hora Início:</label>
+                        <input type="time" id="hora_inicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora_fim"><i class="fa-solid fa-clock"></i> Hora Fim:</label>
+                        <input type="time" id="hora_fim" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-submit">
+                    <i class="fa-solid fa-check-circle"></i> Confirmar Reserva
+                </button>
+            </form>
+        </div>
+
+        <!-- Card de Salas Disponíveis -->
+        <div class="card">
+            <h2><i class="fa-solid fa-list-check"></i> Salas Disponíveis</h2>
+            <div id="lista-salas" class="item-list">
+                <p class="loading-text">A carregar salas...</p>
+            </div>
+        </div>
+
+        <!-- Footer Profissional -->
+        <footer class="footer">
+            <p>&copy; 2026 Projeto Integrado DWS / POO / BD — Todos os direitos reservados.</p>
+            <p class="footer-subtext">Desenvolvido por Gabriel Elias | Entrega Final</p>
+        </footer>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
