@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reservas - Laboratórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Reservas de Salas e Laboratórios</h1>
+        
+        <section class="card">
+            <h2>Efetuar Reserva</h2>
+            <form id="form-reserva">
+                <label for="utilizador">ID Utilizador:</label>
+                <input type="number" id="utilizador" name="utilizador" required placeholder="Ex: 1">
+
+                <label for="sala">ID Sala:</label>
+                <input type="number" id="sala" name="sala" required placeholder="Ex: 101">
+
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" required>
+
+                <label for="hora_inicio">Hora Início:</label>
+                <input type="time" id="hora_inicio" name="hora_inicio" required>
+
+                <label for="hora_fim">Hora Fim:</label>
+                <input type="time" id="hora_fim" name="hora_fim" required>
+
+                <button type="submit">Reservar</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Salas Disponíveis</h2>
+            <div id="lista-salas">
+                <p>A carregar salas...</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
