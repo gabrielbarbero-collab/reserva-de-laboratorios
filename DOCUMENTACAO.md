@@ -1,77 +1,68 @@
-# Documentação do Projeto - Etapa 1: Modelagem e Base de Dados
+# Documentação da Etapa 1 - Sistema de Reservas de Laboratório
 
-**Projeto:** Sistema de Reservas de Laboratórios e Salas de Estudo  
-**Autor:** Gabriel Elias / Gabriel Barbero  
-**Data de Entrega:** 09/11/2026  
-
----
-
-## 1. Visão Geral do Sistema
-O sistema tem como objetivo gerir as reservas de salas e laboratórios de uma instituição de ensino. Permite listar salas disponíveis, registar utilizadores (alunos e professores) e efetuar reservas em tempo real, garantindo a integridade dos dados através de relações de chaves estrangeiras.
+## 1. Introdução
+Este documento apresenta a especificação de requisitos, a modelagem UML e a estrutura do banco de dados relacional para o Sistema de Reservas de Laboratório, desenvolvido com Flask, MySQL e HTML/CSS/JS.
 
 ---
 
-## 2. Modelagem Orientada a Objetos (UML - Diagrama de Classes)
+## 2. Levantamento de Requisitos
 
-### Classes Principais:
+### 2.1 Requisitos Funcionais (RF)
+- **RF01 - Gestão de Utilizadores:** O sistema deve permitir o registo, autenticação e gestão de utilizadores (Alunos, Professores e Administradores).
+- **RF02 - Gestão de Salas/Laboratórios:** O sistema deve permitir visualizar a lista de laboratórios disponíveis, as suas capacidades e os seus recursos.
+- **RF03 - Realização de Reservas:** O sistema deve permitir que um utilizador selecione um laboratório, data e horário para realizar uma reserva.
+- **RF04 - Validação de Conflitos:** O sistema deve impedir que duas reservas sejam efetuadas para o mesmo laboratório no mesmo dia e intervalo de horário.
+- **RF05 - Cancelamento e Alteração:** O sistema deve permitir que o utilizador cancele ou altere as suas próprias reservas.
 
-1. **Utilizador**
-   - `- id_utilizador: int`
-   - `- nome: string`
-   - `- email: string`
-   - `- tipo: string` ('aluno' | 'professor')
-
-2. **Sala**
-   - `- id_sala: int`
-   - `- nome: string`
-   - `- capacidade: int`
-   - `- recursos: string`
-
-3. **Reserva**
-   - `- id_reserva: int`
-   - `- id_utilizador: int` (FK)
-   - `- id_sala: int` (FK)
-   - `- data: date`
-   - `- hora_inicio: time`
-   - `- hora_fim: time`
-   - `- estado: string`
-
-### Relacionamentos:
-- **Utilizador (1) ─── (0..*) Reserva:** Um utilizador pode realizar várias reservas.
-- **Sala (1) ─── (0..*) Reserva:** Uma sala pode estar associada a várias reservas em horários distintos.
+### 2.2 Requisitos Não Funcionais (RNF)
+- **RNF01 - Desempenho:** A consulta de disponibilidade de salas deve responder em menos de 2 segundos.
+- **RNF02 - Usabilidade:** A interface web deve ser intuitiva e responsiva para computadores e dispositivos móveis.
+- **RNF03 - Segurança:** As palavras-passe dos utilizadores devem ser armazenadas com encriptação no banco de dados.
+- **RNF04 - Disponibilidade:** O banco de dados MySQL deve estar configurado no ambiente local XAMPP para execução dos testes.
 
 ---
 
-## 3. Modelo Relacional da Base de Dados (MySQL)
+## 3. Diagramas UML
 
-### Tabela: `utilizadores`
-| Campo | Tipo | Restrições |
-| :--- | :--- | :--- |
-| `id_utilizador` | INT | PRIMARY KEY, AUTO_INCREMENT |
-| `nome` | VARCHAR(100) | NOT NULL |
-| `email` | VARCHAR(100) | UNIQUE, NOT NULL |
-| `tipo` | ENUM | 'aluno', 'professor', NOT NULL |
+### 3.1 Diagrama de Casos de Uso
+![Diagrama de Casos de Uso](img/casos_de_uso.png)
 
-### Tabela: `salas`
-| Campo | Tipo | Restrições |
-| :--- | :--- | :--- |
-| `id_sala` | INT | PRIMARY KEY, AUTO_INCREMENT |
-| `nome` | VARCHAR(100) | NOT NULL |
-| `capacidade` | INT | NOT NULL |
-| `recursos` | TEXT | NULLABLE |
-
-### Tabela: `reservas`
-| Campo | Tipo | Restrições |
-| :--- | :--- | :--- |
-| `id_reserva` | INT | PRIMARY KEY, AUTO_INCREMENT |
-| `id_utilizador` | INT | FOREIGN KEY (utilizadores) |
-| `id_sala` | INT | FOREIGN KEY (salas) |
-| `data` | DATE | NOT NULL |
-| `hora_inicio` | TIME | NOT NULL |
-| `hora_fim` | TIME | NOT NULL |
-| `estado` | VARCHAR(20) | DEFAULT 'confirmada' |
+*Descrição dos Casos de Uso:*
+- **UC01 - Registar/Login:** Permite acesso autenticado ao sistema.
+- **UC02 - Consultar Laboratórios:** Exibe as salas e recursos.
+- **UC03 - Reservar Laboratório:** Cria o agendamento de um horário.
+- **UC04 - Gerir Reservas:** Permite visualizar e cancelar agendamentos.
 
 ---
 
-## 4. Script de Teste e Validação da Conexão
-A verificação da comunicação entre a aplicação Python e o MySQL (XAMPP) é realizada através do script `testar_conexao.py`, que executa consultas de contagem simples nas tabelas `salas` e `utilizadores`.
+### 3.2 Diagrama de Classes
+![Diagrama de Classes](img/diagrama.png)
+
+```mermaid
+classDiagram
+    class Utilizador {
+        +int id_utilizador
+        +string nome
+        +string email
+        +string tipo
+    }
+
+    class Sala {
+        +int id_sala
+        +string nome
+        +int capacidade
+        +string recursos
+    }
+
+    class Reserva {
+        +int id_reserva
+        +int id_utilizador
+        +int id_sala
+        +date data
+        +time hora_inicio
+        +time hora_fim
+        +string estado
+    }
+
+    Utilizador "1" -- "0..*" Reserva : realiza
+    Sala "1" -- "0..*" Reserva : contem
